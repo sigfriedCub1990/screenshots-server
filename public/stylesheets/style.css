@@ -1,0 +1,21 @@
+body {
+    height: 100vh;
+}
+
+.container {
+    height: 100%;
+    display: flex;
+}
+
+.is-centered {
+    align-items: center;
+    justify-content: center;
+}
+
+.text-centered {
+    text-align: center;
+}
+
+.hidden {
+    display: none !important;
+}

@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  .row
+    .column.text-centered
+      h2 Take an screenshot of any page
+      form#screenshot-form
+        fieldset
+          input#input-screenshot(type="text" placeholder="Ex: https://www.google.com")
+          input.button-primary(type="submit" value="Request Screenshot")
+      form#download(method='POST' action='/api/download')
+        input#download-button.button.button-outline.hidden(value="Download image :)" type='submit')
+        input#download-image.hidden(type='text' name='image' value='')
+block scripts
+  script(src='/javascripts/page.js')
