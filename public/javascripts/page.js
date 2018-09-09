@@ -12,14 +12,15 @@ _$.select('#screenshot-form').submit(function (e) {
             accept: 'application/json'
         }
     };
-    
-    _$.ajax(options, function (response) {
-        if (response.status === 'error') {
-            console.log(response.message);
-        } else {
-            _$.select('#download-button').removeClass('hidden');
-            _$.select('#download-image').attr('value', response.hash);
-        }
-    });
+
+    _$.ajax(options)
+        .then(response => {
+            if (response.error) {
+                console.log(response.message);
+            } else {
+                _$.select('#download-button').removeClass('hidden');
+                _$.select('#download-image').attr('value', response.data.hash);
+            }
+        }).catch(err => console.log(err));
 });
 

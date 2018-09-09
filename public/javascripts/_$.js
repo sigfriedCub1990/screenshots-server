@@ -61,21 +61,41 @@ _$ = (function () {
         return this;
     }
 
-    function ajax(options, fn) {
-        const xhr = new XMLHttpRequest();
-        xhr.open(options.method, options.url, true);
-        xhr.setRequestHeader('Content-type', options.headers.contentType);
-        xhr.setRequestHeader('Accept', options.headers.accept);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                fn (JSON.parse(xhr.responseText));
+    function ajax(options) {
+        return new Promise((resolve, reject) => {
+            const xhr = new XMLHttpRequest();
+            xhr.open(options.method, options.url, true);
+            xhr.setRequestHeader('Content-type', options.headers.contentType);
+            xhr.setRequestHeader('Accept', options.headers.accept);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    resolve ({
+                        error: false,
+                        data: JSON.parse(xhr.responseText)
+                    });
+                }
             }
-        }
-        if (options.data) {
-            xhr.send(JSON.stringify(options.data));
-        } else {
-            xhr.send();
-        }
+
+            xhr.onload = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    resolve({
+                        error: false,
+                        data: JSON.parse(xhr.responseText)
+                    });
+                } else {
+                    reject({
+                        error: true,
+                        message: this.status
+                    });
+                }
+            }
+
+            if (options.data) {
+                xhr.send(JSON.stringify(options.data));
+            } else {
+                xhr.send();
+            }
+        })
     }
 
     function ready(fn) {
