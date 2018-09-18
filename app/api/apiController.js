@@ -31,15 +31,19 @@ const apiController = {
 
             await browser.close();
 
-            res.json({status: 'Ok', hash: name});
+            await Utils.compressFile(nodePath.join(process.cwd(), `./screenshots/`), name);
+            fs.unlink(nodePath.join(process.cwd(), `./screenshots/${name}.jpg`));
+
+            res.json({status: 'Ok', hash: `${name}.gz`});
         } catch (e) {
             res.json({status: 'error', message: e.message});
         }
     },
 
     download: function(req, res) {
-        const file = nodePath.join(process.cwd(), `./screenshots/${req.body.image}.jpg`);
-        res.download(file)
+        const file = nodePath.join(process.cwd(), `./screenshots/${req.body.image}`);
+
+        res.download(file);
     }
 };
 

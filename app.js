@@ -19,6 +19,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.enable('trust proxy');
 //Register controller routes
 indexController.registerRoutes(app);
 apiController.registerRoutes(app);
