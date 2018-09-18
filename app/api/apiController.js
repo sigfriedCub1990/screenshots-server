@@ -1,14 +1,21 @@
 const fs = require('fs-extra');
 const nodePath = require('path');
 const puppeteer = require('puppeteer');
+const rateLimit = require('express-rate-limit');
 const Utils = require('../utils/utils.js');
+
+const limiter = rateLimit({
+    windowMs: 5 * 60 * 1000, 
+    max: 10,
+    message: "Too many requests from your IP, try again in 5 minutes."
+  });
 
 const path = '/api/';
 
 const apiController = {
     registerRoutes: function (app) {
         app.post(`${path}download`, this.download);
-        app.post(`${path}screenshot`, this.screenshot);
+        app.post(`${path}screenshot`, limiter, this.screenshot);
     },
 
     screenshot: async function(req,res) {
