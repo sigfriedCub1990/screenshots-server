@@ -19,3 +19,23 @@ body {
 .hidden {
     display: none !important;
 }
+
+.input-error {
+    border-color: #db063496 !important;
+    outline: 0;
+}
+
+.has-validation {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.has-validation input {
+    margin-bottom: 0;
+}
+
+.has-validation label {
+    color: #db063496;
+    display: block;
+    font-size: 1.2rem;
+}
